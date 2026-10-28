@@ -1,5 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Fan war for Indian cinema. Most tickets wins. Tickets are free.">
+<meta property="og:title" content="cutout.lol — fight for your hero">
+<meta property="og:description" content="Most tickets wins. Tickets are free. Tonight's battle ends at midnight.">
+<meta name="theme-color" content="#140a0e">
 <title>cutout.lol</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Inline&family=Mukta:wght@400;600;800&family=IBM+Plex+Mono:wght@500;700&display=swap">
@@ -1324,7 +1332,7 @@ async function liveBoot(){
       if(p.new.tonight<e.tN){e.tN=p.new.tonight;e.tW=p.new.week;render();return;}
       const d=p.new.tonight-e.tN;e.tW=p.new.week-d;if(d>0)addTickets(e,d);liveUpdate(e.id);}).subscribe();
     setInterval(liveFans,60000);
-  }catch(err){console.error(err);toast("⚠️","Couldn't reach the live board<small>Showing the last saved view</small>");}
+  }catch(err){console.error(err);renderTicker();render();toast("⚠️","Couldn't reach the live board<small>Showing the last saved view</small>");}
 }
 async function liveFans(){const {data}=await SB.from("top_fans_tonight").select("entity_id,display_name,city,tickets").lte("rnk",20);
   S.real={};(data||[]).forEach(r=>{if(SB_USER&&r.display_name===U.name&&r.city===U.city)return;(S.real[r.entity_id]=S.real[r.entity_id]||[]).push({name:r.display_name,city:r.city||"",t:+r.tickets});});
@@ -1361,7 +1369,7 @@ async function liveShare(){if(!SB_USER||!U.name)return;const {data}=await SB.rpc
 
 /* ======================= INIT ======================= */
 if(!S.headlines.length){const t=tonightRank();S.headlines=[`${t[0].name} leads tonight's battle.`,ROASTS[0](t[1].name,t[2].name),`${E("pushpa-2").name} and ${E("kgf-chapter-2").name} fans are trading tickets again.`,ROASTS[5](t[3].name,t[4].name),"Upload your movie ticket for +20 on first day."];}
-renderTicker();renderMe();render();
+if(!LIVE){renderTicker();renderMe();render();}else{renderMe();$("#view").innerHTML=`<p class="muted" style="text-align:center;padding:80px 0">Loading tonight's battle…</p>`;}
 
 if(!LIVE)setInterval(bot,1700);else liveBoot();
 })();
