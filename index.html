@@ -501,6 +501,13 @@ button.how:hover{border-color:var(--marigold)}button.how[disabled]{opacity:.5}
 .ppf{margin-top:4px;font-family:var(--f-mono);font-size:max(6px,.45em);letter-spacing:.12em;text-transform:uppercase;color:#ffffff99;border-top:1px solid #ffffff44;padding-top:4px}
 .poster{container-type:inline-size}
 .ppi{font-size:5.5cqw}.ppt{font-size:15cqw;line-height:1}.pps{font-size:6.5cqw}.ppf{font-size:4.8cqw;margin-top:3cqw;padding-top:3cqw}
+
+/* ---- live v2 ---- */
+.mechip b{font-weight:800}
+.pstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}.pstats div{padding:10px 6px;border-radius:12px;background:#0001}.pstats b{display:block;font-size:18px}.pstats small{font-size:11px;opacity:.75}
+.lvbar{height:8px;border-radius:99px;background:#0002;overflow:hidden}.lvbar i{display:block;height:100%;background:var(--marigold)}
+.cityrow{display:grid;grid-template-columns:120px 1fr auto;gap:10px;align-items:center;padding:6px 0;font-size:14px}.cbar{height:8px;border-radius:99px;background:#ffffff12;overflow:hidden}.cbar i{display:block;height:100%}
+@media (max-width:640px){.mechip b{display:none}}
 canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:58}
 @media (prefers-reduced-motion:reduce){
   .fig .bob,.fig .eyes,.cheer .fig .bob,.dance .fig .bob,.ticker .run,.card.bump,.feed li,.modal,.float,.toast,.bulbs,.stage .rays,.wall li,.live::before,.finalhr,.wallet.pulse{animation:none}
@@ -546,7 +553,7 @@ const RAW={
   ["Pawan Kalyan","Power Star","Tollywood","w f 0 1 #c92a2a"],["Nandamuri Balakrishna","NBK","Tollywood","s m 0 1 #f59f00 g"],["Nagarjuna","King","Tollywood","w s 0 0 #1971c2 g"],["Venkatesh","Victory","Tollywood","s n 0 1 #2b8a3e"],["Ravi Teja","Mass Maharaja","Tollywood","s s 1 1 #e8590c"],
   ["Kamal Haasan","Ulaganayagan","Kollywood","r f 0 1 #343a40 g"],["Vijay Sethupathi","Makkal Selvan","Kollywood","s f 0 2 #495057 g"],["Karthi","Karthi","Kollywood","s m 0 1 #0b7285"],["Silambarasan","STR","Kollywood","w f 0 1 #212529"],
   ["Vicky Kaushal","Vicky","Bollywood","s f 0 1 #5c940d"],["Kartik Aaryan","Kartik","Bollywood","w s 0 0 #f08c00"],["Varun Dhawan","VD","Bollywood","s s 0 0 #1c7ed6"],["Tiger Shroff","Tiger","Bollywood","s n 0 0 #212529"],
-  ["Tovino Thomas","Tovi","Mollywood","w f 0 1 #2f9e44"],["Nivin Pauly","Nivin","Mollywood","c f 0 1 #e64980"],["Shiva Rajkumar","Shivanna","Sandalwood","s m 0 1 #862e9c g"],["Upendra","Uppi","Sandalwood","w s 1 1 #212529"],
+  ["Tovino Thomas","Tovi","Mollywood","w f 0 1 #2f9e44"],["Nivin Pauly","Nivin","Mollywood","c f 0 1 #e64980"],["Shiva Rajkumar","Shivanna","Sandalwood","s m 0 1 #862e9c g"],["Upendra","Uppi","Sandalwood","w s 1 1 #212529"],["Naga Chaitanya","Chay","Tollywood","s s 0 0 #364fc7"],["Ram Pothineni","Ustaad","Tollywood","w s 0 1 #e8590c"],["Varun Tej","Mega Prince","Tollywood","s s 0 0 #2b8a3e"],["Sai Dharam Tej","Supreme Hero","Tollywood","s s 0 1 #1971c2"],["Siddhu Jonnalagadda","Tillu","Tollywood","w m 0 1 #f08c00"],["Nikhil Siddhartha","Nikhil","Tollywood","s n 0 1 #862e9c"],["Adivi Sesh","Sesh","Tollywood","s s 0 1 #495057"],["Jayam Ravi","Jayam","Kollywood","s s 0 1 #1864ab"],["Arya","Arya","Kollywood","w f 0 1 #2f9e44"],["Vishal","Puratchi Thalapathy","Kollywood","s s 0 1 #c92a2a"],["Shahid Kapoor","Shasha","Bollywood","w s 0 0 #212529"],["Sidharth Malhotra","Sid","Bollywood","s s 0 0 #1c7ed6"],["Ayushmann Khurrana","Ayush","Bollywood","w s 0 0 #f59f00"],["Rajkummar Rao","Raj","Bollywood","s m 0 1 #5c940d"],["Sunny Deol","Dhai Kilo","Bollywood","s n 0 0 #e03131"],["Saif Ali Khan","Nawab","Bollywood","w s 0 0 #495057"],["Basil Joseph","Basil","Mollywood","c m 0 1 #fab005"],["Asif Ali","Asif","Mollywood","s f 0 1 #0b7285"],["Unni Mukundan","Unni","Mollywood","s f 0 0 #c92a2a"],["Rakshit Shetty","Simple Star","Sandalwood","w f 0 1 #2b8a3e"],["Dhruva Sarja","Action Prince","Sandalwood","s f 0 1 #212529"],["Ganesh","Golden Star","Sandalwood","s n 0 1 #f59f00"],["Jeet","Super Hero","Bengali","s s 0 0 #c92a2a"],["Prosenjit Chatterjee","Bumba Da","Bengali","w n 0 0 #495057 g"],["Gippy Grewal","Gippy","Punjabi","t f 0 1 #e8590c"],["Ammy Virk","Ammy","Punjabi","t f 0 1 #2f9e44"],
   
   ],
  movies:[["Baahubali 2","The Conclusion","Tollywood"],["RRR","Naatu Naatu","Tollywood"],["Pushpa 2","The Rule","Tollywood"],["Kalki 2898 AD","Sci-fi epic","Tollywood"],["Salaar","Ceasefire","Tollywood"],["Devara","Part 1","Tollywood"],
@@ -1043,7 +1050,7 @@ function renderMe(pulse){
   $("#me").innerHTML=`<button class="pill" type="button" data-sound aria-pressed="${S.sound}" aria-label="Sound">${S.sound?"🔊":"🔇"}</button>
    ${U.daily?"":`<button class="pill boxbtn" type="button" data-daily aria-label="Claim ${DAILY_FREE} free tickets">🎁 ${DAILY_FREE}<span class="lbl"> free tickets</span></button>`}
    <button class="pill" type="button" data-upload aria-label="Upload a real movie ticket">📸<span class="lbl"> Got a real ticket?</span></button>
-   ${LIVE&&!SB_USER?`<button class="wallet" type="button" data-signin>Join the fight</button>`:`<button class="wallet ${pulse?"pulse":""}" type="button" ${LIVE?"data-earn":"data-shop"} aria-label="${U.wallet} tickets">🎟 ${U.wallet}<small>${LIVE?"Earn":"Get"}</small></button>`}`;}
+   ${LIVE&&SB_USER&&U.name?`<button class="pill mechip" type="button" data-me aria-label="Your profile">${U.guest?"👤":"🔥"+(U.streak||0)} <b>${esc(U.name.split(" ")[0])}</b></button>`:""}${LIVE&&!(SB_USER&&U.name)?`<button class="pill" type="button" data-google>Sign in</button><button class="wallet" type="button" data-signin>Join the fight</button>`:`<button class="wallet ${pulse?"pulse":""}" type="button" ${LIVE?"data-earn":"data-shop"} aria-label="${U.wallet} tickets">🎟 ${U.wallet}<small>${LIVE?"Earn":"Get"}</small></button>`}`;}
 function earn(n,why,ev){U.wallet+=n;if(ev)floatTxt(ev.clientX,ev.clientY,`+${n} 🎟`);toast("🎟",`+${n} tickets<small>${esc(why)}</small>`);renderMe(true);}
 function spend(n,ev){if(U.wallet<n){openShop(n-U.wallet);return false;}U.wallet-=n;if(ev)floatTxt(ev.clientX,ev.clientY,`-${n} 🎟`,"#ff4f8b");renderMe(true);return true;}
 function openShop(need){const left=DAILY_CAP-U.spent;
@@ -1272,6 +1279,10 @@ document.addEventListener("click",async ev=>{
   if(tg.closest("[data-reveal]")){reveal(pastWinners()[0],"Last night · "+pastWinners()[0].day);return;}
   if(tg.closest("[data-sharewin]")){const w=S.lastReveal||pastWinners()[0];shareCard({e:w.e,kicker:"TONIGHT'S WINNER",head:`${w.e.name} won the night`,sub:`${fmt(w.t)} tickets from fans across India`,stat:"No.1 on cutout.lol",tweet:`${w.e.name} won the night on cutout.lol with ${fmt(w.t)} tickets 🎟👑`});return;}
   if(tg.closest("[data-signin]")){liveSignIn();return;}
+  if(tg.closest("[data-google]")){liveGoogle();return;}
+  if(tg.closest("[data-me]")){liveProfileModal();return;}
+  if(tg.closest("[data-signout]")){SB.auth.signOut().then(()=>location.reload());return;}
+  const cr=tg.closest("[data-copyrally]");if(cr){navigator.clipboard&&navigator.clipboard.writeText(cr.dataset.copyrally);toast("🔗","Rally link copied<small>Every fan who joins through it gives you +10</small>");return;}
   if(tg.closest("[data-earn]")){openModal(`<div class="in" style="gap:10px"><h2 style="margin:0">Get more tickets</h2><p>Tickets are free. Here is how fans earn them:</p><p>🎁 <b>10 every day</b> — tap the gift at the top.<br>📣 <b>+5 per share</b> — share any card, up to 3 a day.<br>📸 <b>+10 / +20</b> — upload a real movie ticket (first-day = 20).</p><button class="ghost" data-close>Got it</button></div>`);return;}
   const nmf=tg.closest("[data-saveprof]");if(nmf){const n=($("#pname")||{}).value||"",c=($("#pcity")||{}).value||"";liveCreateProfile(n.trim(),c);return;}
   const bm=tg.closest("[data-board]");if(bm){S.boardMode=bm.dataset.board;document.querySelectorAll("[data-board]").forEach(b=>b.setAttribute("aria-pressed",b===bm));renderBoard();return;}
@@ -1281,11 +1292,11 @@ document.addEventListener("click",async ev=>{
       $("#stage").scrollIntoView({behavior:reduced()?"auto":"smooth",block:"center"});await wait(reduced()?0:300);
       ritualFX(g.fx,$("#stage"),$("#pfig"));let res={passed:null,rank:0};if(e.cat==="heroes")res=addTickets(e,g.n,true);credit(g.n,e.id,e.name);setTimeout(()=>updateProfile(e),1500);
       if(g.n>=25||res.passed)setTimeout(()=>shareCard({e,kicker:res.passed?"OVERTAKE":"FOR MY HERO",head:res.passed?`${e.name} just passed ${res.passed.name}`:`${g.n} tickets for ${e.name}`,sub:`${g.label} on the cut-out`,stat:e.cat==="heroes"?`#${tonightRank().indexOf(e)+1} tonight · ${fmt(e.tN)} 🎟`:"",
-        tweet:res.passed?`${e.name} just passed ${res.passed.name} on cutout.lol 🔥 My tickets did that. Your move 👉 cutout.lol/${e.slug} ${hashtag(e)}`:`Gave ${g.n} tickets to ${e.name} tonight 🎟️ ${g.label} on the cut-out. Tonight's battle ends at midnight 👉 cutout.lol/${e.slug} ${hashtag(e)}`}),g.fx==="heli"?3800:g.fx==="milk"?3600:2400);
+        tweet:res.passed?`${e.name} just passed ${res.passed.name} on cutout.lol 🔥 My tickets did that. Your move 👉 ${shareURL(e)} ${hashtag(e)}`:`Gave ${g.n} tickets to ${e.name} tonight 🎟️ ${g.label} on the cut-out. Tonight's battle ends at midnight 👉 ${shareURL(e)} ${hashtag(e)}`}),g.fx==="heli"?3800:g.fx==="milk"?3600:2400);
       return;}
     if(tg.closest("[data-pshare]")){const tr=tonightRank(),rn=tr.indexOf(e)+1,ab=tr[rn-2];
       shareCard({e,kicker:"TONIGHT'S BATTLE",head:rn===1?`${e.name} is No.1 tonight`:`${e.name} is #${rn} tonight`,sub:ab?`${fmt(ab.tN-e.tN+1)} tickets behind ${ab.name}`:`${fmt(e.tN-tr[1].tN)} ahead of ${tr[1].name}`,stat:`Ends at midnight`,
-        tweet:ab?`🚨 ${e.name} fans: we're ${fmt(ab.tN-e.tN+1)} tickets behind ${ab.name} tonight. Free tickets every day. Come 👉 cutout.lol/${e.slug} ${hashtag(e)}`:`${e.name} is No.1 tonight on cutout.lol 👑 ${tr[1].name} fans are ${fmt(e.tN-tr[1].tN)} behind. Hold it till midnight 👉 cutout.lol/${e.slug} ${hashtag(e)}`});return;}
+        tweet:ab?`🚨 ${e.name} fans: we're ${fmt(ab.tN-e.tN+1)} tickets behind ${ab.name} tonight. Free tickets every day. Come 👉 ${shareURL(e)} ${hashtag(e)}`:`${e.name} is No.1 tonight on cutout.lol 👑 ${tr[1].name} fans are ${fmt(e.tN-tr[1].tN)} behind. Hold it till midnight 👉 ${shareURL(e)} ${hashtag(e)}`});return;}
   }
   if(cur.t==="m"){const m=cur.m;
     const mg=tg.closest("[data-mgive]");if(mg){const [sd,ns]=mg.dataset.mgive.split(":");const n=+ns;if(!spend(n,ev))return;const x=E(sd==="a"?m.a:m.b);const was=m.ta>=m.tb?"a":"b";
@@ -1342,7 +1353,7 @@ async function liveWinners(){const {data}=await SB.from("night_results").select(
 async function liveUser(user){SB_USER=user;
   const {data:p}=await SB.from("profiles").select("*").eq("id",user.id).maybeSingle();
   if(!p){askProfile();return false;}
-  U.name=p.display_name;U.city=p.city||U.city;U.wallet=p.wallet;U.daily=p.last_daily===istDay();U.shares=p.shares_day===istDay()?p.shares_today:0;
+  U.name=p.display_name;U.city=p.city||U.city;U.wallet=p.wallet;U.guest=!!user.is_anonymous;U.streak=p.streak||0;U.givenTotal=p.given_total||0;SB.rpc("my_rally").then(r=>{U.rally=r.data||0;});U.daily=p.last_daily===istDay();U.shares=p.shares_day===istDay()?p.shares_today:0;
   const since=new Date(Date.now()-((Date.now()+5.5*3600e3)%864e5)).toISOString();
   const {data:l}=await SB.from("ledger").select("entity_id,amount").eq("kind","give").gte("created_at",since);U.my={};(l||[]).forEach(r=>{U.my[r.entity_id]=(U.my[r.entity_id]||0)+r.amount;});
   renderMe();return true;}
@@ -1355,17 +1366,40 @@ async function liveSignIn(){if(SB_USER){askProfile();return;}
   SB_USER=data.user;askProfile();}
 async function liveCreateProfile(name,city){if(name.length<2){toast("✍️","Add your name first");return;}
   const {error}=await SB.from("profiles").insert({id:SB_USER.id,display_name:name,city});if(error){toast("⚠️","Couldn't save<small>"+esc(error.message)+"</small>");return;}
-  closeModal();await liveUser(SB_USER);liveDaily();}
+  closeModal();try{const r=localStorage.getItem("rally");if(r)await SB.rpc("set_referrer",{p_ref:r});}catch(_){}await liveUser(SB_USER);liveDaily();}
 async function needUser(){if(SB_USER&&U.name)return true;await liveSignIn();return false;}
 async function liveGive(e,n,ev){if(!(await needUser()))return false;
   if(U.wallet<n){toast("🎟",`You need ${n-U.wallet} more tickets<small>Claim your daily 10 or share a card for +5</small>`);return false;}
   const {data,error}=await SB.rpc("give_tickets",{p_entity:e.id,p_amount:n,p_source:"give"});
   if(error){toast("⚠️","That didn't go through<small>"+esc(error.message)+"</small>");return false;}
-  U.wallet=data.wallet;if(ev)floatTxt(ev.clientX,ev.clientY,`-${n} 🎟`,"#ff4f8b");renderMe(true);return true;}
+  U.wallet=data.wallet;const before=fanLevel(U.givenTotal||0).name;U.givenTotal=data.given_total;const after=fanLevel(U.givenTotal).name;if(after!==before)setTimeout(()=>toast("⭐",`You are now a ${after} fan<small>Your fan card just levelled up</small>`,"climb"),1800);if(ev)floatTxt(ev.clientX,ev.clientY,`-${n} 🎟`,"#ff4f8b");renderMe(true);return true;}
 async function liveDaily(ev){if(!(await needUser()))return;const {data,error}=await SB.rpc("claim_daily");
-  if(error){U.daily=true;renderMe();toast("🎁","Already claimed today<small>Back tomorrow for 10 more</small>");return;}
-  U.daily=true;U.wallet=data.wallet;closeModal();snd("kaching");rain("ticket",1000);toast("🎟",`+10 tickets<small>Free for today. Back tomorrow for more.</small>`);renderMe(true);}
+  if(error){if(/sign in/.test(error.message)){openModal(`<div class="in" style="gap:10px"><h2 style="margin:0">Keep your streak going</h2><p>Guests get their first 10 tickets. Sign in with Google to claim 10 free tickets every day, build a streak (+20 bonus every 7th day) and keep your rank on any phone.</p><button class="primary" type="button" data-google>Sign in with Google</button><button class="ghost" data-close>Later</button></div>`);return;}U.daily=true;renderMe();toast("🎁","Already claimed today<small>Back tomorrow for 10 more</small>");return;}
+  U.daily=true;U.wallet=data.wallet;U.streak=data.streak;closeModal();snd("kaching");rain("ticket",1000);toast("🔥",`+${10+(data.bonus||0)} tickets · ${data.streak}-day streak<small>${data.bonus?"7-day bonus! ":""}Come back tomorrow to keep it alive.</small>`);renderMe(true);}
 async function liveShare(){if(!SB_USER||!U.name)return;const {data}=await SB.rpc("reward_share");if(data&&data.rewarded){U.wallet=data.wallet;setTimeout(()=>{toast("🎟","+5 tickets<small>Thanks for sharing</small>");renderMe(true);},600);}}
+
+
+/* ---- live v2: login, streaks, levels, rally, city battle ---- */
+const FANLV=[[0,"Whistle"],[50,"Banner"],[200,"Garland"],[500,"Cut-out"],[1500,"Abhishekam"],[5000,"Box Office"]];
+const fanLevel=t=>{let i=0;FANLV.forEach((l,k)=>{if(t>=l[0])i=k;});const nx=FANLV[i+1];return {name:FANLV[i][1],next:nx?nx[1]:null,need:nx?nx[0]-t:0,pct:nx?Math.round((t-FANLV[i][0])/(nx[0]-FANLV[i][0])*100):100};};
+function shareURL(e){const base=(LIVE?location.origin:"https://cutout.lol")+"/#p-"+e.slug;return SB_USER&&!U.guest?base.replace("/#","/?r="+SB_USER.id+"#"):base;}
+try{const r=new URLSearchParams(location.search).get("r");if(r)localStorage.setItem("rally",r);}catch(_){}
+async function liveGoogle(){const opts={provider:"google",options:{redirectTo:location.origin+location.pathname}};
+  const {error}=SB_USER&&U.guest?await SB.auth.linkIdentity(opts):await SB.auth.signInWithOAuth(opts);
+  if(error)toast("⚠️","Google sign-in isn't switched on yet<small>"+esc(error.message)+"</small>");}
+function liveProfileModal(){const lv=fanLevel(U.givenTotal||0);
+  openModal(`<div class="in" style="gap:12px"><div class="myhk">Your fan card</div><h2 style="margin:0">${esc(U.name)} · ${esc(U.city)}</h2>
+   <div class="pstats"><div><b>🔥 ${U.streak||0}</b><small>day streak</small></div><div><b>${fmt(U.givenTotal||0)}</b><small>tickets given</small></div><div><b>${esc(lv.name)}</b><small>fan level</small></div></div>
+   ${lv.next?`<div class="lvbar"><i style="width:${lv.pct}%"></i></div><p class="hint">${fmt(lv.need)} more tickets to reach <b>${esc(lv.next)}</b></p>`:""}
+   ${U.guest?`<p>You're playing as a guest. Sign in to keep your rank on any phone, claim 10 free tickets every day and build your streak.</p><button class="primary" type="button" data-google>Sign in with Google</button>`:
+    `<p class="hint">Rally link: fans who join through it give you +10 each. You've rallied <b>${U.rally||0}</b>.</p><button class="primary" type="button" data-copyrally="${location.origin}/?r=${SB_USER.id}">Copy my rally link</button><button class="ghost" type="button" data-signout>Sign out</button>`}
+   <button class="ghost" data-close>Close</button></div>`);}
+async function liveCity(e){if(!LIVE||e.cat!=="heroes")return;const {data}=await SB.from("city_battle_tonight").select("city,tickets").eq("entity_id",e.id).order("tickets",{ascending:false}).limit(6);
+  const v=$("#view");if(!v||current().e!==e||$("#citybattle"))return;const max=data&&data.length?data[0].tickets:1;
+  const el=document.createElement("section");el.className="panel";el.id="citybattle";
+  el.innerHTML=`<h2>City battle tonight</h2>${data&&data.length?data.map((r,i)=>`<div class="cityrow"><span>${i+1}. ${esc(r.city)}</span><span class="cbar"><i style="width:${Math.max(6,r.tickets/max*100)}%;background:${colorOf(e)}"></i></span><b>${fmt(r.tickets)} 🎟</b></div>`).join(""):`<p class="muted">No city has shown up for ${esc(e.name)} tonight. Make yours the first.</p>`}`;
+  v.appendChild(el);}
+const _renderProfile=renderProfile;renderProfile=function(e){_renderProfile(e);liveCity(e);};
 
 /* ======================= INIT ======================= */
 if(!S.headlines.length){const t=tonightRank();S.headlines=[`${t[0].name} leads tonight's battle.`,ROASTS[0](t[1].name,t[2].name),`${E("pushpa-2").name} and ${E("kgf-chapter-2").name} fans are trading tickets again.`,ROASTS[5](t[3].name,t[4].name),"Upload your movie ticket for +20 on first day."];}
