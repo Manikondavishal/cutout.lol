@@ -894,7 +894,7 @@ function industryFig(e,o){
   return wrapFig(s,`Cute star mascot for ${e.name}`,{crown:o.crown,crownY:-6});
 }
 const LIVE=!!(window.supabase&&window.CUTOUT_CFG&&!/[?&]demo/.test(location.search));
-const ART={"nandamuri-balakrishna":1,nagarjuna:1,venkatesh:1,"ravi-teja":1,"kamal-haasan":1,karthi:1,silambarasan:1,"vicky-kaushal":1,"kartik-aaryan":1,"varun-dhawan":1,"diljit-dosanjh":1,dev:1,"pawan-kalyan":1,"vijay-sethupathi":1,"shiva-rajkumar":1,"aamir-khan":1,"amitabh-bachchan":1,"hrithik-roshan":1,"akshay-kumar":1,"ranbir-kapoor":1,"ranveer-singh":1,"ajay-devgn":1,mammootty:1,"fahadh-faasil":1,prithviraj:1,"dulquer-salmaan":1,sudeep:1,"allu-arjun":1,rajinikanth:1,chiranjeevi:1,nani:1,"vijay-deverakonda":1,"ajith-kumar":1,suriya:1,dhanush:1,vikram:1,sivakarthikeyan:1,prabhas:1,"shah-rukh-khan":1,yash:1,"jr-ntr":1,"ram-charan":1,"mahesh-babu":1,vijay:1,"salman-khan":1,"rishab-shetty":1,mohanlal:1};
+const ART={"shiva-rajkumar":1,"upendra":1,"tiger-shroff":1,"tovino-thomas":1,"nivin-pauly":1,"naga-chaitanya":1,"ram-pothineni":1,"siddhu-jonnalagadda":1,"sunny-deol":1,"shahid-kapoor":1,"rakshit-shetty":1,"gippy-grewal":1,"varun-tej":1,"sai-dharam-tej":1,"nikhil-siddhartha":1,"adivi-sesh":1,"jayam-ravi":1,"arya":1,"vishal":1,"sidharth-malhotra":1,"ayushmann-khurrana":1,"rajkummar-rao":1,"saif-ali-khan":1,"basil-joseph":1,"asif-ali":1,"unni-mukundan":1,"dhruva-sarja":1,"ganesh":1,"jeet":1,"prosenjit-chatterjee":1,"ammy-virk":1,"nandamuri-balakrishna":1,nagarjuna:1,venkatesh:1,"ravi-teja":1,"kamal-haasan":1,karthi:1,silambarasan:1,"vicky-kaushal":1,"kartik-aaryan":1,"varun-dhawan":1,"diljit-dosanjh":1,dev:1,"pawan-kalyan":1,"vijay-sethupathi":1,"shiva-rajkumar":1,"aamir-khan":1,"amitabh-bachchan":1,"hrithik-roshan":1,"akshay-kumar":1,"ranbir-kapoor":1,"ranveer-singh":1,"ajay-devgn":1,mammootty:1,"fahadh-faasil":1,prithviraj:1,"dulquer-salmaan":1,sudeep:1,"allu-arjun":1,rajinikanth:1,chiranjeevi:1,nani:1,"vijay-deverakonda":1,"ajith-kumar":1,suriya:1,dhanush:1,vikram:1,sivakarthikeyan:1,prabhas:1,"shah-rukh-khan":1,yash:1,"jr-ntr":1,"ram-charan":1,"mahesh-babu":1,vijay:1,"salman-khan":1,"rishab-shetty":1,mohanlal:1};
 const POSTERS={}; /* slug:"posters/slug.jpg" — add real posters here */
 function posterFig(e){const c=colorOf(e),src=POSTERS[e.id];return `<span class="poster" style="--c:${c}">${src?`<img src="${src}" alt="${esc(e.name+" poster")}" loading="lazy">`:`<span class="pph"><span class="ppi">${esc(e.tag)}</span><span class="ppt">${esc(e.name)}</span><span class="pps">${esc(e.nick)}</span><span class="ppf">In theatres</span></span>`}</span>`;}
 function figure(e,o={}){if(e.cat==="movies")return posterFig(e);if(ART[e.id]&&e.cat==="heroes")return `<span class="figart ${o.crown?"crowned":""}"><img src="art/${e.id}.webp" alt="${esc("Fan-made figurine of "+e.name)}" loading="lazy" decoding="async">${o.crown?`<span class="goldbase" aria-hidden="true"></span>`:""}</span>`;const k=CATS[e.cat].kind;if(k==="banner")return bannerFig(e,o);if(k==="industry")return industryFig(e,o);return k==="movie"?movieFig(e,o):k==="team"?teamFig(e,o):k==="food"?foodFig(e,o):personFig(e,o);}
@@ -1073,9 +1073,9 @@ function openUpload(){
    <div><label for="upShow">Which show?</label><select id="upShow"><option value="20">First day or opening weekend · +20</option><option value="10">Any other show · +10</option></select></div>
    <div><label for="upFile">Ticket screenshot or photo</label><input id="upFile" type="file" accept="image/*"></div>
    <img id="upPrev" alt="" hidden style="max-height:160px;border-radius:10px;object-fit:contain">
-   <p class="hint">Rules: each booking ID counts once, the show must be in the last 7 days, and up to 3 tickets a day. Demo: the check is simulated.</p>
+   <p class="hint">Rules: each booking ID counts once, the show must be in the last 7 days, and up to 3 tickets a day. ${LIVE?"We check every ticket by hand, usually within a few hours.":"Demo: the check is simulated."}</p>
    <button class="primary" type="button" id="upGo">Check my ticket</button><button class="ghost" data-close>Cancel</button></div>`);}
-function checkUpload(){
+function checkUpload(){if(LIVE){liveUpload();return;}
   const f=$("#upFile").files[0];if(!f){$("#upGo").textContent="Add a screenshot first";return;}
   if(U.bookings.length>=3){$("#upGo").textContent="3 tickets a day max. Back tomorrow.";return;}
   const n=+$("#upShow").value,mv=E($("#upMovie").value);const b=$("#upGo");b.disabled=true;b.textContent="Checking booking ID, theatre and show date…";
@@ -1094,7 +1094,16 @@ async function cardPNG({e,kicker,head,sub,stat,color}){
   const svg=figure(e,{garland:true,crown:/No\.1|#1 |WINNER|won/i.test(head+kicker)}).replace("<svg ",'<svg xmlns="http://www.w3.org/2000/svg" width="640" height="845" ');
   const img=new Image(),isArt=ART[e.id]&&e.cat==="heroes";await new Promise(r=>{img.onload=r;img.onerror=r;img.src=isArt?`art/${e.id}.webp`:"data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);});
   const fw=560,fh=isArt?750:739,fx=(W-fw)/2,fy=130;
-  if(img.width&&isArt){c.save();c.shadowColor="#000c";c.shadowBlur=36;c.shadowOffsetY=18;c.drawImage(img,fx,fy,fw,fh);c.restore();}
+  if(e.cat==="movies"){const pw=470,ph=705,px=(W-pw)/2,py=150;const src=POSTERS[e.id];let pim=null;if(src){pim=new Image();await new Promise(r=>{pim.onload=r;pim.onerror=r;pim.src=src;});}
+    c.save();c.shadowColor="#000c";c.shadowBlur=40;c.shadowOffsetY=20;c.beginPath();c.roundRect(px,py,pw,ph,22);c.fillStyle=col;c.fill();c.restore();
+    c.save();c.beginPath();c.roundRect(px,py,pw,ph,22);c.clip();
+    if(pim&&pim.width){c.drawImage(pim,px,py,pw,ph);}else{let gg=c.createRadialGradient(px+pw*.7,py+ph*.25,10,px+pw*.5,py+ph*.5,ph*.8);gg.addColorStop(0,"#ffffffaa");gg.addColorStop(.25,col);gg.addColorStop(1,"#0e0508");c.fillStyle=gg;c.fillRect(px,py,pw,ph);
+      gg=c.createLinearGradient(0,py+ph*.4,0,py+ph);gg.addColorStop(0,"#0000");gg.addColorStop(1,"#000d");c.fillStyle=gg;c.fillRect(px,py,pw,ph);
+      c.textAlign="left";c.fillStyle="#fff";c.font='700 22px ui-monospace,monospace';c.fillText((e.tag||"").toUpperCase(),px+40,py+60);
+      c.font='64px "Bungee","Impact",sans-serif';wrapTxt(c,e.name,px+40,py+ph-170,pw-80,66,2);
+      c.font='700 26px system-ui,sans-serif';c.fillStyle="#ffffffcc";c.fillText(e.nick||"",px+40,py+ph-60);c.textAlign="center";}
+    c.restore();}
+  else if(img.width&&isArt){c.save();c.shadowColor="#000c";c.shadowBlur=36;c.shadowOffsetY=18;c.drawImage(img,fx,fy,fw,fh);c.restore();}
   else if(img.width){const o=document.createElement("canvas");o.width=fw;o.height=fh;const oc=o.getContext("2d");oc.drawImage(img,0,0,fw,fh);oc.globalCompositeOperation="source-in";oc.fillStyle="#fff4e2";oc.fillRect(0,0,fw,fh);
     c.save();c.shadowColor="#000a";c.shadowBlur=40;c.shadowOffsetY=20;for(let a=0;a<16;a++)c.drawImage(o,fx+Math.cos(a/16*6.283)*9,fy+Math.sin(a/16*6.283)*9);c.restore();c.drawImage(img,fx,fy,fw,fh);}
   c.fillStyle="#fff4e2";c.font='64px "Bungee","Impact",sans-serif';let y=wrapTxt(c,head,W/2,960,W-120,74,2);
@@ -1244,7 +1253,7 @@ function updateMB(m){const a=E(m.a),b=E(m.b),t=m.ta+m.tb;
 function current(){const h=location.hash.slice(1);
   if(h.startsWith("p-")){const e=ALL.find(x=>x.slug===h.slice(2));if(e)return {t:"p",e};}
   if(h.startsWith("m-")){const m=M(h.slice(2));if(m)return {t:"m",m};}return {t:"h"};}
-function render(){const cur=current();if(cur.t==="p")renderProfile(cur.e);else if(cur.t==="m")renderMB(cur.m);else{$("#view").style.removeProperty("--c");renderHome();}}
+function render(){if(LIVE&&location.hash==="#admin"){liveAdmin();return;}const cur=current();if(cur.t==="p")renderProfile(cur.e);else if(cur.t==="m")renderMB(cur.m);else{$("#view").style.removeProperty("--c");renderHome();}}
 addEventListener("hashchange",()=>{const h=location.hash;if(h==="#tonight"){if(current().t!=="h")render();const t=$("#tonight");if(t)t.scrollIntoView({behavior:reduced()?"auto":"smooth"});return;}render();scrollTo(0,0);});
 function addTickets(e,n,mine){const before=tonightRank().map(x=>x.id);e.tN+=n;e.tW+=n;const after=tonightRank().map(x=>x.id);
   const o=before.indexOf(e.id),k=after.indexOf(e.id);let passed=null;
@@ -1280,6 +1289,7 @@ document.addEventListener("click",async ev=>{
   if(tg.closest("[data-sharewin]")){const w=S.lastReveal||pastWinners()[0];shareCard({e:w.e,kicker:"TONIGHT'S WINNER",head:`${w.e.name} won the night`,sub:`${fmt(w.t)} tickets from fans across India`,stat:"No.1 on cutout.lol",tweet:`${w.e.name} won the night on cutout.lol with ${fmt(w.t)} tickets 🎟👑`});return;}
   if(tg.closest("[data-signin]")){liveSignIn();return;}
   if(tg.closest("[data-google]")){liveGoogle();return;}
+  const rv=tg.closest("[data-review]");if(rv){SB.rpc("review_ticket",{p_id:+rv.dataset.review,p_ok:rv.dataset.ok==="1"}).then(({error})=>{if(error)toast("⚠️",esc(error.message));else liveAdmin();});return;}
   if(tg.closest("[data-me]")){liveProfileModal();return;}
   if(tg.closest("[data-signout]")){SB.auth.signOut().then(()=>location.reload());return;}
   const cr=tg.closest("[data-copyrally]");if(cr){navigator.clipboard&&navigator.clipboard.writeText(cr.dataset.copyrally);toast("🔗","Rally link copied<small>Every fan who joins through it gives you +10</small>");return;}
@@ -1401,6 +1411,21 @@ async function liveCity(e){if(!LIVE||e.cat!=="heroes")return;const {data}=await 
   v.appendChild(el);}
 const _renderProfile=renderProfile;renderProfile=function(e){_renderProfile(e);liveCity(e);};
 
+async function liveUpload(){const f=$("#upFile").files[0],b=$("#upGo");if(!f){b.textContent="Add a screenshot first";return;}
+  if(!SB_USER||U.guest){closeModal();openModal(`<div class="in" style="gap:10px"><h2 style="margin:0">Sign in to upload tickets</h2><p>Real tickets are worth +10, or +20 for first day. Sign in with Google so they're saved to your fan card.</p><button class="primary" type="button" data-google>Sign in with Google</button><button class="ghost" data-close>Later</button></div>`);return;}
+  const n=+$("#upShow").value,mv=E($("#upMovie").value);b.disabled=true;b.textContent="Uploading…";
+  const path=`${SB_USER.id}/${Date.now()}.${(f.name.split(".").pop()||"jpg").toLowerCase()}`;
+  const up=await SB.storage.from("tickets").upload(path,f,{contentType:f.type||"image/jpeg"});
+  if(up.error){b.disabled=false;b.textContent="Upload failed. Try again";toast("⚠️","Couldn't upload<small>"+esc(up.error.message)+"</small>");return;}
+  const {error}=await SB.rpc("submit_ticket",{p_movie:mv.id,p_first_day:n===20,p_path:path});
+  if(error){b.disabled=false;b.textContent=error.message;return;}
+  closeModal();snd("ding");toast("🎟",`Ticket received for ${esc(mv.name)}<small>We'll check it within a few hours. +${n} lands in your wallet when it's approved.</small>`);
+  setTimeout(()=>shareCard({e:mv,kicker:"I WATCHED IT IN A THEATRE",head:`${mv.name}, in a real seat`,sub:n===20?"First day, first show energy":"Watched it on the big screen",stat:n===20?"First day / opening weekend":"Theatre show",tweet:`Watched ${mv.name} in the theatre 🎬 Show your ticket and fight for your hero 👉 ${location.origin} ${hashtag(mv)}`}),900);}
+async function liveAdmin(){if(!LIVE||!SB_USER){$("#view").innerHTML=`<p class="muted" style="padding:60px 0;text-align:center">Sign in first.</p>`;return;}
+  const {data:adm}=await SB.from("admins").select("user_id").eq("user_id",SB_USER.id);if(!adm||!adm.length){$("#view").innerHTML=`<p class="muted" style="padding:60px 0;text-align:center">Admins only.</p>`;return;}
+  const {data:rows}=await SB.from("ticket_uploads").select("id,entity_id,image_path,first_day,reward,created_at").eq("status","pending").order("created_at").limit(30);
+  const urls={};for(const r of rows||[]){const {data}=await SB.storage.from("tickets").createSignedUrl(r.image_path,600);urls[r.id]=data&&data.signedUrl;}
+  $("#view").innerHTML=`<section class="panel"><h2>Ticket review · ${(rows||[]).length} pending</h2>${(rows||[]).map(r=>`<div class="rev-row" style="display:grid;grid-template-columns:160px 1fr;gap:14px;padding:12px 0;border-top:1px solid #ffffff14"><a href="${urls[r.id]}" target="_blank" rel="noopener"><img src="${urls[r.id]}" alt="Ticket" style="width:160px;border-radius:8px"></a><div><b>${esc((E(r.entity_id)||{}).name||r.entity_id)}</b> · ${r.first_day?"First day (+20)":"+10"}<br><small class="muted">${new Date(r.created_at).toLocaleString("en-IN")}</small><div class="row" style="margin-top:8px"><button class="primary" data-review="${r.id}" data-ok="1">Approve</button> <button class="ghost" data-review="${r.id}" data-ok="0">Reject</button></div></div></div>`).join("")||"<p>Nothing to review.</p>"}</section>`;}
 /* ======================= INIT ======================= */
 if(!S.headlines.length){const t=tonightRank();S.headlines=[`${t[0].name} leads tonight's battle.`,ROASTS[0](t[1].name,t[2].name),`${E("pushpa-2").name} and ${E("kgf-chapter-2").name} fans are trading tickets again.`,ROASTS[5](t[3].name,t[4].name),"Upload your movie ticket for +20 on first day."];}
 if(!LIVE){renderTicker();renderMe();render();}else{renderMe();$("#view").innerHTML=`<p class="muted" style="text-align:center;padding:80px 0">Loading tonight's battle…</p>`;}
