@@ -535,6 +535,9 @@ button.how:hover{border-color:var(--marigold)}button.how[disabled]{opacity:.5}
  .lastw{padding:12px}.hallrow .hw{width:66px}
  .indf{margin-left:-16px;margin-right:-16px;padding:0 16px 2px}
 }
+
+.indnote{margin:6px 0 0;font-size:12.5px;color:var(--muted)}
+@media (max-width:640px){.packs{grid-template-columns:repeat(2,minmax(0,1fr))}.bigcut .bigname{display:none}.lastw .lwf{width:70px;height:92px}.lwn{font-size:22px}.howto{grid-template-columns:1fr 1fr}.sech h2{font-size:20px}}
 canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:58}
 @media (prefers-reduced-motion:reduce){
   .fig .bob,.fig .eyes,.cheer .fig .bob,.dance .fig .bob,.ticker .run,.card.bump,.feed li,.modal,.float,.toast,.bulbs,.stage .rays,.wall li,.live::before,.finalhr,.wallet.pulse{animation:none}
@@ -1038,8 +1041,8 @@ function stamp(box,txt){const s=document.createElement("div");s.className="stamp
 
 /* ======================= LEAN APP v5 — tickets are votes ======================= */
 /* One rule: most tickets wins. Tickets come from: free daily, sharing, real movie tickets, buying. */
-PACKS.length=0;PACKS.push({id:"p10",t:10,bonus:0,price:100},{id:"p50",t:50,bonus:5,price:500},{id:"p100",t:100,bonus:15,price:899,tag:"Most popular",hot:true},{id:"p200",t:200,bonus:40,price:2000,tag:"Best value"});
-const DAILY_CAP=2000, SHARE_REWARD=5, SHARE_LIMIT=3, DAILY_FREE=10;
+PACKS.length=0;PACKS.push({id:"p5",t:5,bonus:0,price:49},{id:"p12",t:10,bonus:2,price:99},{id:"p30",t:25,bonus:5,price:199,tag:"Most popular",hot:true},{id:"p80",t:65,bonus:15,price:499,tag:"Fan club pack"});
+const DAILY_CAP=499, SHARE_REWARD=5, SHARE_LIMIT=3, DAILY_FREE=10;
 /* how many tickets you give decides the celebration on the cut-out */
 const GIVE=[{n:1,fx:"seeti",label:"Seeti"},{n:10,fx:"paper",label:"Paper rain"},{n:25,fx:"garland",label:"Garland"},{n:50,fx:"milk",label:"Milk abhishekam"},{n:100,fx:"crackers",label:"Crackers"},{n:250,fx:"band",label:"Teenmaar band"},{n:500,fx:"heli",label:"Flower drop"}];
 const HEROES=ALL.filter(e=>e.cat==="heroes");
@@ -1085,9 +1088,9 @@ function openShop(need){const left=DAILY_CAP-U.spent;
    <h3>${need?`You need ${need} more tickets`:"Get tickets"}</h3>
    <div class="earnrow"><button class="ghost" type="button" data-daily ${U.daily?"disabled":""}>🎁 ${U.daily?"Today's free tickets claimed":`${DAILY_FREE} free today`}</button><button class="ghost" type="button" data-upload>📸 Upload a real movie ticket · +10 to +20</button></div>
    <p class="hint">Share any card for +${SHARE_REWARD} tickets (up to ${SHARE_LIMIT} times a day).</p>
-   <div class="packs">${PACKS.map(p=>{const off=p.price>left;return `<button class="pack ${p.hot?"hot":""}" type="button" data-pack="${p.id}" ${off?"disabled":""}>${p.tag?`<span class="tg">${p.tag}</span>`:""}<b>${fmt(p.t)} 🎟</b><span class="pr">${inr(p.price)}</span><span class="meal">₹10 each</span><span class="bonus">${p.bonus?`+${p.bonus} free`:"&nbsp;"}</span></button>`;}).join("")}</div>
+   <div class="packs">${PACKS.map(p=>{const off=p.price>left;return `<button class="pack ${p.hot?"hot":""}" type="button" data-pack="${p.id}" ${off?"disabled":""}>${p.tag?`<span class="tg">${p.tag}</span>`:""}<b>${fmt(p.t)} 🎟</b><span class="pr">${inr(p.price)}</span><span class="meal">₹${(p.price/(p.t+p.bonus)).toFixed(1).replace(".0","")} each</span><span class="bonus">${p.bonus?`+${p.bonus} free`:"&nbsp;"}</span></button>`;}).join("")}</div>
    <p class="fedline">Half of every ticket you buy goes to a partner kitchen.</p>
-   <p class="hint">Spent today: ${inr(U.spent)} of your ${inr(DAILY_CAP)} daily limit. Tickets are only for supporting your favourites. They can't be cashed out or win anything. Demo: no payment is taken.</p>
+   <p class="hint">Spent today: ${inr(U.spent)} of your ${inr(DAILY_CAP)} daily limit. Tickets are only for supporting your favourites. They can't be cashed out or win anything. ${LIVE?"Payments by Razorpay (UPI, cards, wallets). 18+ only.":"Demo: no payment is taken."}</p>
    <button class="ghost" data-close>Not now</button></div>`);}
 
 /* ---------- real-ticket upload ---------- */
@@ -1199,19 +1202,20 @@ function renderHome(){
   $("#view").innerHTML=`${cutoutHTML(top)}
    ${winnersHTML()}
    <section id="tonight"><div class="sech"><h2>Tonight's battle</h2><span class="live">Resets at midnight · <span data-mid>${hms(msToMidnight())}</span></span></div>
-    <div class="tabs" role="group" aria-label="Board"><button class="tab" type="button" data-board="night" aria-pressed="${S.boardMode!=="week"}">Tonight</button><button class="tab" type="button" data-board="week" aria-pressed="${S.boardMode==="week"}">This week · ${daysToSunday()} days left</button></div>${indChips()}
+    <div class="tabs" role="group" aria-label="Board"><button class="tab" type="button" data-board="night" aria-pressed="${S.boardMode!=="week"}">Tonight</button><button class="tab" type="button" data-board="week" aria-pressed="${S.boardMode==="week"}">This week · ${daysToSunday()} days left</button></div>${indChips()}<p class="indnote" id="indnote">${IND_NOTE[S.ind||"all"]||`Only ${esc(S.ind)} heroes.`}</p>
     <div id="hboard"></div></section>
    ${LIVE?"":`<section><div class="sech"><h2>Movie battles</h2><span class="muted" style="font-size:14px">Running for the whole release</span></div><div class="rail">${MB.map(mbCard).join("")}</div></section>`}
    <section class="panel"><h2>How to get tickets</h2><div class="howto">
      <button type="button" class="how" data-daily ${U.daily?"disabled":""}><b>🎁 Free every day</b><span>${DAILY_FREE} tickets, just for showing up</span></button>
      <button type="button" class="how" data-upload><b>📸 Real movie ticket</b><span>Upload it for +10, or +20 for first day</span></button>
      <div class="how"><b>📣 Share</b><span>+${SHARE_REWARD} every time you share a card, up to ${SHARE_LIMIT} a day</span></div>
-     ${LIVE?"":`<button type="button" class="how" data-shop><b>🎟 Buy</b><span>₹10 a ticket. Half goes to a partner kitchen.</span></button>`}</div></section>
+     <button type="button" class="how" data-shop><b>🎟 Buy</b><span>From ₹49 for 5. Half goes to a partner kitchen.</span></button></div></section>
    <div class="demo">${LIVE?"Fan-made · not affiliated with anyone listed · tickets are free and never pay out":"Prototype · all numbers simulated · fan-made, not affiliated with anyone listed · 18+ · tickets never pay out"}</div>`;
   renderBoard();}
 const PAN=["Prabhas","Allu Arjun","Jr NTR","Ram Charan","Yash","Rajinikanth","Shah Rukh Khan","Vijay","Rishab Shetty","Kamal Haasan","Dulquer Salmaan","Salman Khan","Hrithik Roshan","Ranbir Kapoor"];
 const inInd=e=>{const f=S.ind||"all";return f==="all"||(f==="pan"?PAN.includes(e.name):e.tag===f);};
-function indChips(){const tags=[...new Set(HEROES.map(e=>e.tag))];return `<div class="indf" role="group" aria-label="Industry">${[["all","All India"],["pan","🌏 Pan-India"],...tags.map(t=>[t,t])].map(([v,n])=>`<button type="button" class="ich" data-ind="${v}" aria-pressed="${(S.ind||"all")===v}" style="--c:${TAGC[v]||"#ffb31f"}">${n}</button>`).join("")}</div>`;}
+const IND_NOTE={all:"Every hero from every industry, ranked together.",pan:"Stars whose films release across India in many languages."};
+function indChips(){const tags=[...new Set(HEROES.map(e=>e.tag))];return `<div class="indf" role="group" aria-label="Filter by industry">${[["all","All heroes"],["pan","🌏 Pan-India stars"],...tags.map(t=>[t,t])].map(([v,n])=>`<button type="button" class="ich" data-ind="${v}" aria-pressed="${(S.ind||"all")===v}" style="--c:${TAGC[v]||"#ffb31f"}">${n}</button>`).join("")}</div>`;}
 let R0={};
 function topFan(e){const b=board(e.id),me=myT(e.id);if(!b.length&&!me)return LIVE?`<div class="tf">👑 Be his first fan tonight</div>`:"";const f=me&&(!b.length||me>=b[0].t)?{name:"You",city:U.city,you:true}:b[0];return `<div class="tf ${f.you?"you":""}">👑 Top fan: <b>${esc(f.name)}</b> · ${esc(f.city)}</div>`;}
 function moveTag(now,start){const d=start-now;return d>0?`<span class="mv up">▲ ${d}</span>`:d<0?`<span class="mv down">▼ ${-d}</span>`:`<span class="mv flat">–</span>`;}
@@ -1306,12 +1310,12 @@ document.addEventListener("click",async ev=>{
   if(tg.closest("[data-upload]")){openUpload();return;}
   if(tg.closest("#upGo")){checkUpload();return;}
   const dl=tg.closest("[data-daily]");if(dl&&LIVE&&!U.daily){ev.preventDefault();liveDaily(ev);return;}if(dl&&!U.daily){U.daily=true;closeModal();snd("kaching");rain("ticket",1000);earn(DAILY_FREE,"Free tickets for today. Back tomorrow for more.",ev);const cur=current();if(cur.t==="h")renderHome();return;}
-  const pk=tg.closest("[data-pack]");if(pk&&!pk.disabled){const p=PACKS.find(x=>x.id===pk.dataset.pack),n=p.t+p.bonus;closeModal();U.wallet+=n;U.spent+=p.price;snd("kaching");rain("ticket",Math.min(2600,700+n*6));renderMe(true);toast("🎟",`+${fmt(n)} tickets added<small>${inr(p.price*FOOD_SHARE)} of that goes to food</small>`);return;}
+  const pk=tg.closest("[data-pack]");if(pk&&!pk.disabled&&LIVE){liveBuy(PACKS.find(x=>x.id===pk.dataset.pack));return;}if(pk&&!pk.disabled){const p=PACKS.find(x=>x.id===pk.dataset.pack),n=p.t+p.bonus;closeModal();U.wallet+=n;U.spent+=p.price;snd("kaching");rain("ticket",Math.min(2600,700+n*6));renderMe(true);toast("🎟",`+${fmt(n)} tickets added<small>${inr(p.price*FOOD_SHARE)} of that goes to food</small>`);return;}
   const sh=tg.closest("[data-shared]");if(sh&&!sh.dataset.done){document.querySelectorAll("[data-shared]").forEach(x=>x.dataset.done=1);if(LIVE)liveShare();else if(U.shares<SHARE_LIMIT){U.shares++;setTimeout(()=>earn(SHARE_REWARD,"Thanks for sharing"),600);}}
   const ct=tg.closest("[data-copytext]");if(ct){copy(ct.dataset.copytext,ct.closest(".in").querySelector(".copied"));return;}
   const fo=tg.closest("[data-follow]");if(fo){ev.preventDefault();const id=fo.dataset.follow,e=E(id);if(isFollow(e)){U.follow=U.follow.filter(x=>x!==id);toast("☆",`Unfollowed ${esc(e.name)}`);}else{U.follow.push(id);snd("ding");toast("★",`Following ${esc(e.name)}<small>We'll tell you when he moves up or down</small>`);}
     const cur=current();if(cur.t==="h")renderBoard();else if(cur.t==="p"){const b=$("#pfollow");if(b)b.outerHTML=followBtn(e,true).replace('class="fol','id="pfollow" class="fol');}return;}
-  const ic=tg.closest("[data-ind]");if(ic){S.ind=ic.dataset.ind;document.querySelectorAll("[data-ind]").forEach(b=>b.setAttribute("aria-pressed",b===ic));renderBoard();return;}
+  const ic=tg.closest("[data-ind]");if(ic){S.ind=ic.dataset.ind;const nn=$("#indnote");if(nn)nn.textContent=IND_NOTE[S.ind]||`Only ${S.ind} heroes.`;document.querySelectorAll("[data-ind]").forEach(b=>b.setAttribute("aria-pressed",b===ic));renderBoard();return;}
   if(tg.closest("[data-reveal]")){reveal(pastWinners()[0],"Last night · "+pastWinners()[0].day);return;}
   if(tg.closest("[data-sharewin]")){const w=S.lastReveal||pastWinners()[0];shareCard({e:w.e,kicker:"TONIGHT'S WINNER",head:`${w.e.name} won the night`,sub:`${fmt(w.t)} tickets from fans across India`,stat:"No.1 on cutout.lol",tweet:`${w.e.name} won the night on cutout.lol with ${fmt(w.t)} tickets 🎟👑`});return;}
   if(tg.closest("[data-signin]")){liveSignIn();return;}
@@ -1320,7 +1324,7 @@ document.addEventListener("click",async ev=>{
   if(tg.closest("[data-me]")){liveProfileModal();return;}
   if(tg.closest("[data-signout]")){SB.auth.signOut().then(()=>location.reload());return;}
   const cr=tg.closest("[data-copyrally]");if(cr){navigator.clipboard&&navigator.clipboard.writeText(cr.dataset.copyrally);toast("🔗","Rally link copied<small>Every fan who joins through it gives you +10</small>");return;}
-  if(tg.closest("[data-earn]")){openModal(`<div class="in" style="gap:10px"><h2 style="margin:0">Get more tickets</h2><p>Tickets are free. Here is how fans earn them:</p><p>🎁 <b>10 every day</b> — tap the gift at the top.<br>📣 <b>+5 per share</b> — share any card, up to 3 a day.<br>📸 <b>+10 / +20</b> — upload a real movie ticket (first-day = 20).</p><button class="ghost" data-close>Got it</button></div>`);return;}
+  if(tg.closest("[data-earn]")){openShop();return;}if(false){openModal(`<div class="in" style="gap:10px"><h2 style="margin:0">Get more tickets</h2><p>Tickets are free. Here is how fans earn them:</p><p>🎁 <b>10 every day</b> — tap the gift at the top.<br>📣 <b>+5 per share</b> — share any card, up to 3 a day.<br>📸 <b>+10 / +20</b> — upload a real movie ticket (first-day = 20).</p><button class="ghost" data-close>Got it</button></div>`);return;}
   const nmf=tg.closest("[data-saveprof]");if(nmf){const n=($("#pname")||{}).value||"",c=($("#pcity")||{}).value||"";liveCreateProfile(n.trim(),c);return;}
   const bm=tg.closest("[data-board]");if(bm){S.boardMode=bm.dataset.board;document.querySelectorAll("[data-board]").forEach(b=>b.setAttribute("aria-pressed",b===bm));renderBoard();return;}
   const cur=current();
@@ -1363,7 +1367,7 @@ let _mid=msToMidnight();setInterval(()=>{const m=msToMidnight();if(m>_mid+1000){
 
 
 /* ======================= LIVE (Supabase) ======================= */
-let SB=LIVE?window.supabase.createClient(CUTOUT_CFG.url,CUTOUT_CFG.key):null,SB_USER=null;
+let SB=LIVE?window.supabase.createClient(CUTOUT_CFG.url,CUTOUT_CFG.key,{auth:{flowType:"pkce",detectSessionInUrl:true,persistSession:true}}):null,SB_USER=null;
 const istDay=()=>new Date(Date.now()+5.5*3600e3).toISOString().slice(0,10);
 async function liveBoot(){
   try{
@@ -1374,6 +1378,9 @@ async function liveBoot(){
     const t=tonightRank(),w=weekRank();t.forEach((e,i)=>{if(e.r0N==null)e.r0N=i+1;});w.forEach((e,i)=>{if(e.r0W==null)e.r0W=i+1;});
     await Promise.all([liveFans(),liveWinners()]);
     const {data:{session}}=await SB.auth.getSession();if(session)await liveUser(session.user);
+    if(/[?&]code=/.test(location.search)){const q=new URLSearchParams(location.search);q.delete("code");history.replaceState(null,"",location.pathname+(q.toString()?"?"+q:"")+location.hash);if(session)toast("✅","Signed in with Google<small>Your rank and streak are saved to your account</small>");}
+    if(/error_description=/.test(location.search+location.hash)){const m=decodeURIComponent((location.search+location.hash).match(/error_description=([^&]+)/)[1]).replace(/\+/g," ");toast("⚠️","Google sign-in failed<small>"+esc(m)+"</small>");history.replaceState(null,"",location.pathname);}
+    SB.auth.onAuthStateChange((ev,ss)=>{if((ev==="SIGNED_IN"||ev==="USER_UPDATED")&&ss&&(!SB_USER||SB_USER.id!==ss.user.id||U.guest!==!!ss.user.is_anonymous))liveUser(ss.user).then(()=>render());});
     S.headlines=[`${t[0].name} leads tonight's battle.`,"Tickets are free. Claim 10 every day.","Upload your movie ticket for +20 on first day."];renderTicker();
     renderMe();render();
     SB.channel("ents").on("postgres_changes",{event:"UPDATE",schema:"public",table:"entities"},p=>{const e=E(p.new.id);if(!e||e.cat!=="heroes")return;
@@ -1422,7 +1429,7 @@ const fanLevel=t=>{let i=0;FANLV.forEach((l,k)=>{if(t>=l[0])i=k;});const nx=FANL
 const SITE=location.origin+location.pathname.replace(/index\.html$/,"");
 function shareURL(e){const base=(LIVE?SITE:"https://cutout.lol/")+"#p-"+e.slug;return SB_USER&&!U.guest?base.replace("#","?r="+SB_USER.id+"#"):base;}
 try{const r=new URLSearchParams(location.search).get("r");if(r)localStorage.setItem("rally",r);}catch(_){}
-async function liveGoogle(){const opts={provider:"google",options:{redirectTo:location.origin+location.pathname}};
+async function liveGoogle(){const opts={provider:"google",options:{redirectTo:SITE}};
   const {error}=SB_USER&&U.guest?await SB.auth.linkIdentity(opts):await SB.auth.signInWithOAuth(opts);
   if(error)toast("⚠️","Google sign-in isn't switched on yet<small>"+esc(error.message)+"</small>");}
 function liveProfileModal(){const lv=fanLevel(U.givenTotal||0);
@@ -1454,6 +1461,20 @@ async function liveAdmin(){if(!LIVE||!SB_USER){$("#view").innerHTML=`<p class="m
   const {data:rows}=await SB.from("ticket_uploads").select("id,entity_id,image_path,first_day,reward,created_at").eq("status","pending").order("created_at").limit(30);
   const urls={};for(const r of rows||[]){const {data}=await SB.storage.from("tickets").createSignedUrl(r.image_path,600);urls[r.id]=data&&data.signedUrl;}
   $("#view").innerHTML=`<section class="panel"><h2>Ticket review · ${(rows||[]).length} pending</h2>${(rows||[]).map(r=>`<div class="rev-row" style="display:grid;grid-template-columns:160px 1fr;gap:14px;padding:12px 0;border-top:1px solid #ffffff14"><a href="${urls[r.id]}" target="_blank" rel="noopener"><img src="${urls[r.id]}" alt="Ticket" style="width:160px;border-radius:8px"></a><div><b>${esc((E(r.entity_id)||{}).name||r.entity_id)}</b> · ${r.first_day?"First day (+20)":"+10"}<br><small class="muted">${new Date(r.created_at).toLocaleString("en-IN")}</small><div class="row" style="margin-top:8px"><button class="primary" data-review="${r.id}" data-ok="1">Approve</button> <button class="ghost" data-review="${r.id}" data-ok="0">Reject</button></div></div></div>`).join("")||"<p>Nothing to review.</p>"}</section>`;}
+
+/* ---- live payments (Razorpay via Supabase Edge Functions) ---- */
+function loadRzp(){return new Promise((res,rej)=>{if(window.Razorpay)return res();const sc=document.createElement("script");sc.src="https://checkout.razorpay.com/v1/checkout.js";sc.onload=res;sc.onerror=rej;document.head.appendChild(sc);});}
+async function liveBuy(p){if(!(await needUser()))return;if(U.guest){openModal(`<div class="in" style="gap:10px"><h2 style="margin:0">Sign in to buy tickets</h2><p>Bought tickets are saved to your account, so sign in with Google first.</p><button class="primary" type="button" data-google>Sign in with Google</button><button class="ghost" data-close>Later</button></div>`);return;}
+  const {data,error}=await SB.functions.invoke("create-order",{body:{pack:p.id}});
+  if(error||!data||!data.order_id){toast("🎟","Ticket packs open soon<small>"+esc((data&&data.error)||"Payments are being switched on")+"</small>");return;}
+  try{await loadRzp();}catch(_){toast("⚠️","Couldn't load the payment window");return;}
+  closeModal();
+  const rz=new Razorpay({key:data.key_id,order_id:data.order_id,amount:data.amount,currency:"INR",name:"cutout.lol",description:`${p.t+p.bonus} tickets`,theme:{color:"#ffb31f"},prefill:{name:U.name},
+    handler:async r=>{const v=await SB.functions.invoke("verify-payment",{body:{order_id:r.razorpay_order_id,payment_id:r.razorpay_payment_id,signature:r.razorpay_signature}});
+      if(v.error||!v.data||!v.data.ok){toast("⚠️","Payment received, tickets pending<small>We'll add them within a few minutes. Ref "+esc(r.razorpay_payment_id)+"</small>");return;}
+      U.wallet=v.data.wallet;snd("kaching");rain("ticket",Math.min(2600,700+(p.t+p.bonus)*20));renderMe(true);toast("🎟",`+${p.t+p.bonus} tickets added<small>Thank you. Half goes to a partner kitchen.</small>`);}});
+  rz.on("payment.failed",r=>toast("⚠️","Payment didn't go through<small>"+esc(r.error&&r.error.description||"Try again")+"</small>"));rz.open();}
+
 /* ======================= INIT ======================= */
 if(!S.headlines.length){const t=tonightRank();S.headlines=[`${t[0].name} leads tonight's battle.`,ROASTS[0](t[1].name,t[2].name),`${E("pushpa-2").name} and ${E("kgf-chapter-2").name} fans are trading tickets again.`,ROASTS[5](t[3].name,t[4].name),"Upload your movie ticket for +20 on first day."];}
 if(!LIVE){renderTicker();renderMe();render();}else{renderMe();$("#view").innerHTML=`<p class="muted" style="text-align:center;padding:80px 0">Loading tonight's battle…</p>`;}
