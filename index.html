@@ -508,6 +508,33 @@ button.how:hover{border-color:var(--marigold)}button.how[disabled]{opacity:.5}
 .lvbar{height:8px;border-radius:99px;background:#0002;overflow:hidden}.lvbar i{display:block;height:100%;background:var(--marigold)}
 .cityrow{display:grid;grid-template-columns:120px 1fr auto;gap:10px;align-items:center;padding:6px 0;font-size:14px}.cbar{height:8px;border-radius:99px;background:#ffffff12;overflow:hidden}.cbar i{display:block;height:100%}
 @media (max-width:640px){.mechip b{display:none}}
+
+/* ---- mobile pass ---- */
+@media (max-width:640px){
+ .fanbar{gap:6px}.fanbar .logo{font-size:21px;letter-spacing:-.02em}
+ [data-sound]{display:none}.mebox{gap:5px}.pill{padding:6px 8px;font-size:12px}
+ .wallet{padding:5px 9px;font-size:13px}.wallet small{display:none}
+ .ticker{font-size:12px}
+ .bigcut{padding:44px 8% 66px;gap:10px;border-radius:20px}.curtain{width:6.5%}.valance{height:24px;background-size:44px 30px}
+ .cutwrap{width:min(240px,62vw)}.marquee{padding:6px 12px 8px}.marquee h1{font-size:clamp(28px,9vw,38px)}
+ .cutinfo{gap:8px;padding-right:0}.cutinfo .k{font-size:10.5px}.sub2{font-size:14px}
+ .row2{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.row2 .cta{padding:10px 14px;font-size:14px;flex:1 1 auto;text-align:center}
+ .crowd{height:40px}
+ .podium{margin-top:12px}.podname{font-size:14px}.podt{font-size:13px}.pod .tf{display:none}.pod .fol{font-size:11px;padding:3px 8px}
+ .hgrid{grid-template-columns:1fr;gap:8px}
+ .hc{display:grid;grid-template-columns:30px 54px minmax(0,1fr) auto;grid-template-rows:auto auto auto;column-gap:10px;row-gap:1px;align-items:center;text-align:left;padding:8px 10px;border-radius:14px}
+ .hc .hclink{display:contents}
+ .hc .rk{grid-column:1;grid-row:1/4;position:static;font-size:16px}
+ .hc .f{grid-column:2;grid-row:1/4;width:54px;height:70px;margin:0}
+ .hc .cname{grid-column:3;grid-row:1;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .hc .cp{grid-column:3;grid-row:2;font-size:13px}
+ .hc .ctag{grid-column:3;grid-row:3;font-size:11.5px}
+ .hc .tf{display:none}
+ .hc .fol{grid-column:4;grid-row:1/4;margin:0}
+ .hc:hover{transform:none}
+ .lastw{padding:12px}.hallrow .hw{width:66px}
+ .indf{margin-left:-16px;margin-right:-16px;padding:0 16px 2px}
+}
 canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:58}
 @media (prefers-reduced-motion:reduce){
   .fig .bob,.fig .eyes,.cheer .fig .bob,.dance .fig .bob,.ticker .run,.card.bump,.feed li,.modal,.float,.toast,.bulbs,.stage .rays,.wall li,.live::before,.finalhr,.wallet.pulse{animation:none}
@@ -1197,7 +1224,7 @@ function renderBoard(bump){const el=$("#hboard");if(!el)return;const week=S.boar
      <div class="block"><span>${rk}</span></div>${followBtn(e)}</div>`;}).join("");
   const rest=l.slice(3,15).map((e,i)=>{const rk=i+4,ab=l[rk-2];return `<li class="card hc ${e.id===bump?"bump":""} ${isFollow(e)?"followed":""}" style="--c:${colorOf(e)}">
      <a class="hclink" href="#p-${e.slug}"><span class="rk">#${rk}</span><div class="f">${figure(e)}</div><div class="cname">${esc(e.name)}</div>
-     <div class="cp">${fmt(e[k])} 🎟 ${moveTag(rk,R0[e.id])}</div><div class="ctag">${fmt(ab[k]-e[k]+1)} behind ${esc(ab.name.split(" ")[0])}</div>${topFan(e)}</a>${followBtn(e)}</li>`;}).join("");
+     <div class="cp">${fmt(e[k])} 🎟 ${moveTag(rk,R0[e.id])}</div><div class="ctag">${fmt(ab[k]-e[k]+1)} to pass ${esc(ab.name.split(" ")[0])}</div>${topFan(e)}</a>${followBtn(e)}</li>`;}).join("");
   el.innerHTML=`${myHeroesHTML(l,k,r0)}<div class="podium">${pod}</div><ol class="grid hgrid">${rest}</ol>`;}
 function myHeroesHTML(l,k,r0){const f=l.filter(isFollow);if(!f.length)return `<p class="followhint">☆ Follow your heroes to pin them here and get alerts when they move.</p>`;
   return `<div class="myh"><div class="myhk">Your heroes</div><div class="myhrow">${f.map(e=>{const rk=l.indexOf(e)+1,ab=l[rk-2];return `<a class="myhc" href="#p-${e.slug}" style="--c:${colorOf(e)}"><span class="mf">${figure(e,{crown:rk===1})}</span><span><b>#${rk} ${esc(e.name)}</b><small>${moveTag(rk,R0[e.id])} ${ab?`· ${fmt(ab[k]-e[k]+1)} behind #${rk-1}`:"· leading"}${myT(e.id)?` · you’re his #${myRank(e.id)} fan`:""}</small></span></a>`;}).join("")}</div></div>`;}
@@ -1392,7 +1419,8 @@ async function liveShare(){if(!SB_USER||!U.name)return;const {data}=await SB.rpc
 /* ---- live v2: login, streaks, levels, rally, city battle ---- */
 const FANLV=[[0,"Whistle"],[50,"Banner"],[200,"Garland"],[500,"Cut-out"],[1500,"Abhishekam"],[5000,"Box Office"]];
 const fanLevel=t=>{let i=0;FANLV.forEach((l,k)=>{if(t>=l[0])i=k;});const nx=FANLV[i+1];return {name:FANLV[i][1],next:nx?nx[1]:null,need:nx?nx[0]-t:0,pct:nx?Math.round((t-FANLV[i][0])/(nx[0]-FANLV[i][0])*100):100};};
-function shareURL(e){const base=(LIVE?location.origin:"https://cutout.lol")+"/#p-"+e.slug;return SB_USER&&!U.guest?base.replace("/#","/?r="+SB_USER.id+"#"):base;}
+const SITE=location.origin+location.pathname.replace(/index\.html$/,"");
+function shareURL(e){const base=(LIVE?SITE:"https://cutout.lol/")+"#p-"+e.slug;return SB_USER&&!U.guest?base.replace("#","?r="+SB_USER.id+"#"):base;}
 try{const r=new URLSearchParams(location.search).get("r");if(r)localStorage.setItem("rally",r);}catch(_){}
 async function liveGoogle(){const opts={provider:"google",options:{redirectTo:location.origin+location.pathname}};
   const {error}=SB_USER&&U.guest?await SB.auth.linkIdentity(opts):await SB.auth.signInWithOAuth(opts);
@@ -1402,7 +1430,7 @@ function liveProfileModal(){const lv=fanLevel(U.givenTotal||0);
    <div class="pstats"><div><b>🔥 ${U.streak||0}</b><small>day streak</small></div><div><b>${fmt(U.givenTotal||0)}</b><small>tickets given</small></div><div><b>${esc(lv.name)}</b><small>fan level</small></div></div>
    ${lv.next?`<div class="lvbar"><i style="width:${lv.pct}%"></i></div><p class="hint">${fmt(lv.need)} more tickets to reach <b>${esc(lv.next)}</b></p>`:""}
    ${U.guest?`<p>You're playing as a guest. Sign in to keep your rank on any phone, claim 10 free tickets every day and build your streak.</p><button class="primary" type="button" data-google>Sign in with Google</button>`:
-    `<p class="hint">Rally link: fans who join through it give you +10 each. You've rallied <b>${U.rally||0}</b>.</p><button class="primary" type="button" data-copyrally="${location.origin}/?r=${SB_USER.id}">Copy my rally link</button><button class="ghost" type="button" data-signout>Sign out</button>`}
+    `<p class="hint">Rally link: fans who join through it give you +10 each. You've rallied <b>${U.rally||0}</b>.</p><button class="primary" type="button" data-copyrally="${SITE}?r=${SB_USER.id}">Copy my rally link</button><button class="ghost" type="button" data-signout>Sign out</button>`}
    <button class="ghost" data-close>Close</button></div>`);}
 async function liveCity(e){if(!LIVE||e.cat!=="heroes")return;const {data}=await SB.from("city_battle_tonight").select("city,tickets").eq("entity_id",e.id).order("tickets",{ascending:false}).limit(6);
   const v=$("#view");if(!v||current().e!==e||$("#citybattle"))return;const max=data&&data.length?data[0].tickets:1;
@@ -1420,7 +1448,7 @@ async function liveUpload(){const f=$("#upFile").files[0],b=$("#upGo");if(!f){b.
   const {error}=await SB.rpc("submit_ticket",{p_movie:mv.id,p_first_day:n===20,p_path:path});
   if(error){b.disabled=false;b.textContent=error.message;return;}
   closeModal();snd("ding");toast("🎟",`Ticket received for ${esc(mv.name)}<small>We'll check it within a few hours. +${n} lands in your wallet when it's approved.</small>`);
-  setTimeout(()=>shareCard({e:mv,kicker:"I WATCHED IT IN A THEATRE",head:`${mv.name}, in a real seat`,sub:n===20?"First day, first show energy":"Watched it on the big screen",stat:n===20?"First day / opening weekend":"Theatre show",tweet:`Watched ${mv.name} in the theatre 🎬 Show your ticket and fight for your hero 👉 ${location.origin} ${hashtag(mv)}`}),900);}
+  setTimeout(()=>shareCard({e:mv,kicker:"I WATCHED IT IN A THEATRE",head:`${mv.name}, in a real seat`,sub:n===20?"First day, first show energy":"Watched it on the big screen",stat:n===20?"First day / opening weekend":"Theatre show",tweet:`Watched ${mv.name} in the theatre 🎬 Show your ticket and fight for your hero 👉 ${SITE} ${hashtag(mv)}`}),900);}
 async function liveAdmin(){if(!LIVE||!SB_USER){$("#view").innerHTML=`<p class="muted" style="padding:60px 0;text-align:center">Sign in first.</p>`;return;}
   const {data:adm}=await SB.from("admins").select("user_id").eq("user_id",SB_USER.id);if(!adm||!adm.length){$("#view").innerHTML=`<p class="muted" style="padding:60px 0;text-align:center">Admins only.</p>`;return;}
   const {data:rows}=await SB.from("ticket_uploads").select("id,entity_id,image_path,first_day,reward,created_at").eq("status","pending").order("created_at").limit(30);
